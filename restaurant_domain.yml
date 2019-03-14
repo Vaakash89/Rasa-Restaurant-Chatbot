@@ -1,0 +1,123 @@
+slots:
+  location:
+    type: text
+  cuisine:
+    type: text
+  budgetmin:
+      type: float
+      initial_value: 0.0
+  budgetmax:
+      type: float
+      initial_value:  10000.0      
+  emailid:
+      type: text      
+  location_ok:
+      type: bool
+      initial_value: False
+  cuisine_ok:
+      type: bool
+      initial_value: False
+  budget_ok:
+      type: bool
+      initial_value: False
+  restaurant_exist:
+      type: bool
+      initial_value: False
+
+entities:
+- location
+- cuisine
+- budgetmin
+- budgetmax
+- emailid
+
+intents:
+ - greet
+ - affirm
+ - deny
+ - goodbye
+ - thankyou
+ - restaurant_search
+ - send_mail
+ - dont_send_email
+ 
+templates:
+  utter_greet:
+    - "hey there! How may i help you"
+    - "Hi, How can I help you!"
+    - "Hey, How is it going. How May I help you Today"
+  utter_goodbye:
+    - "goodbye :("
+    - "Bye-bye"
+    - "Bon Appetit!"
+  utter_default:
+    - "default message"
+  utter_ask_cuisine: 
+    - text: "what kind of cuisine would you like?"
+      buttons:
+      - title: "Chinese"
+        payload: "Chinese"
+      - title: "Mexican"
+        payload: "Mexican"
+      - title: "Italian"
+        payload: "Italian"
+      - title: "American"
+        payload: "American"
+      - title: "South Indian"
+        payload: "South Indian"
+      - title: "North Indian"
+        payload: "North Indian"
+  utter_ask_howcanhelp:
+    - "how can I help you?"
+  utter_ask_location:
+    - "In what location?"
+  utter_ask_budget:
+    - text: "What price range are you looking for?"
+      buttons:
+      - title: "Less than Rs. 300"
+        payload: '/restaurant_search{"budgetmin":"0","budgetmax":"300"}'
+      - title: "Rs. 300 to 700"
+        payload: '/restaurant_search{"budgetmin":"300","budgetmax":"700"}'
+      - title: "More than 700"
+        payload: '/restaurant_search{"budgetmin":"700","budgetmax":"10000"}'
+
+      #In case the above doesnt work, please comment it and uncomment the below
+      #- title : "Lesser than Rs. 300"
+      #  payload : "/restaurant_search{"budgetmin":"0"}"
+      #  payload : "/restaurant_search{"budgetmax":"300"}"
+      #- title : "Rs. 300 to 700"
+      #  payload : "/restaurant_search{"budgetmin":"300"}"
+      #  payload : "/restaurant_search{"budgetmax":"700"}"
+      #- title : "More than 700"
+      #  payload : "/restaurant_search{"budgetmin":"700"}"
+      #  payload : "/restaurant_search{"budgetmax":"10000"}"
+  utter_ask_email:
+    - text: "Do you want a list of top 10 restaurants in your email?"
+    - text: "Should I send you details of all the restaurants on email?"
+      buttons:
+      - title: "Yes"
+        payload: "/send_mail"
+      - title: "No"
+        payload: "/dont_send_email"
+  utter_ask_emailid:
+    - "Please, enter your email id."
+    - "Ok great, please enter your email id."
+  utter_restart:
+    - "What can I help you with now?"
+  
+actions:
+- utter_greet
+- utter_goodbye
+- utter_default
+- utter_ask_howcanhelp
+- utter_ask_location
+- utter_ask_cuisine
+- utter_ask_budget
+- utter_ask_email
+- utter_ask_emailid
+- utter_restart
+- actions.ActionSearchRestaurants
+- actions.VerifyLocation
+- actions.ActionSendEmail
+- actions.VerifyBudget
+- actions.VerifyCuisine

@@ -1,0 +1,134 @@
+action_factory: null
+action_names:
+- utter_greet
+- utter_goodbye
+- utter_default
+- utter_ask_howcanhelp
+- utter_ask_location
+- utter_ask_cuisine
+- utter_ask_budget
+- utter_ask_email
+- utter_ask_emailid
+- utter_restart
+- action_restaurant
+- verify_location
+- action_send_email
+- verify_budget
+- verify_cuisine
+actions:
+- utter_greet
+- utter_goodbye
+- utter_default
+- utter_ask_howcanhelp
+- utter_ask_location
+- utter_ask_cuisine
+- utter_ask_budget
+- utter_ask_email
+- utter_ask_emailid
+- utter_restart
+- actions.ActionSearchRestaurants
+- actions.VerifyLocation
+- actions.ActionSendEmail
+- actions.VerifyBudget
+- actions.VerifyCuisine
+config:
+  store_entities_as_slots: true
+entities:
+- location
+- cuisine
+- budgetmin
+- budgetmax
+- emailid
+intents:
+- greet
+- affirm
+- deny
+- goodbye
+- thankyou
+- restaurant_search
+- send_mail
+- dont_send_email
+slots:
+  budget_ok:
+    initial_value: false
+    type: rasa_core.slots.BooleanSlot
+  budgetmax:
+    initial_value: 10000.0
+    max_value: 1.0
+    min_value: 0.0
+    type: rasa_core.slots.FloatSlot
+  budgetmin:
+    initial_value: 0.0
+    max_value: 1.0
+    min_value: 0.0
+    type: rasa_core.slots.FloatSlot
+  cuisine:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  cuisine_ok:
+    initial_value: false
+    type: rasa_core.slots.BooleanSlot
+  emailid:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  location:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  location_ok:
+    initial_value: false
+    type: rasa_core.slots.BooleanSlot
+  restaurant_exist:
+    initial_value: false
+    type: rasa_core.slots.BooleanSlot
+templates:
+  utter_ask_budget:
+  - buttons:
+    - payload: /restaurant_search{"budgetmin":"0","budgetmax":"300"}
+      title: Less than Rs. 300
+    - payload: /restaurant_search{"budgetmin":"300","budgetmax":"700"}
+      title: Rs. 300 to 700
+    - payload: /restaurant_search{"budgetmin":"700","budgetmax":"10000"}
+      title: More than 700
+    text: What price range are you looking for?
+  utter_ask_cuisine:
+  - buttons:
+    - payload: Chinese
+      title: Chinese
+    - payload: Mexican
+      title: Mexican
+    - payload: Italian
+      title: Italian
+    - payload: American
+      title: American
+    - payload: South Indian
+      title: South Indian
+    - payload: North Indian
+      title: North Indian
+    text: what kind of cuisine would you like?
+  utter_ask_email:
+  - text: Do you want a list of top 10 restaurants in your email?
+  - buttons:
+    - payload: /send_mail
+      title: Yes
+    - payload: /dont_send_email
+      title: No
+    text: Should I send you details of all the restaurants on email?
+  utter_ask_emailid:
+  - text: Please, enter your email id.
+  - text: Ok great, please enter your email id.
+  utter_ask_howcanhelp:
+  - text: how can I help you?
+  utter_ask_location:
+  - text: In what location?
+  utter_default:
+  - text: default message
+  utter_goodbye:
+  - text: goodbye :(
+  - text: Bye-bye
+  - text: Bon Appetit!
+  utter_greet:
+  - text: hey there! How may i help you
+  - text: Hi, How can I help you!
+  - text: Hey, How is it going. How May I help you Today
+  utter_restart:
+  - text: What can I help you with now?
